@@ -2,19 +2,10 @@ package infobip
 
 import (
 	"git.resultys.com.br/lib/lower/convert/decode"
-
 	"git.resultys.com.br/lib/lower/net/request"
 	"git.resultys.com.br/sdk/infobip-golang/message"
+	"git.resultys.com.br/sdk/infobip-golang/response"
 )
-
-type resultsResponse struct {
-	Messages []message.Message `json:"results"`
-}
-
-type callResponse struct {
-	BulkID   string            `json:"bulkId"`
-	Messages []message.Message `json:"messages"`
-}
 
 // CreateRequest ...
 func (client *Client) CreateRequest(url string) *request.CURL {
@@ -29,7 +20,7 @@ func (client *Client) CreateRequest(url string) *request.CURL {
 
 // ProcessCallResponse ...
 func (client *Client) ProcessCallResponse(text string, err error) []message.Message {
-	results := callResponse{Messages: make([]message.Message, 1)}
+	results := response.CallResponse{Messages: make([]message.Message, 1)}
 
 	if err != nil {
 		results.Messages[0].Error.ID = 100
@@ -43,7 +34,7 @@ func (client *Client) ProcessCallResponse(text string, err error) []message.Mess
 
 // ProcessResultsResponse ...
 func (client *Client) ProcessResultsResponse(text string, err error) []message.Message {
-	results := resultsResponse{Messages: make([]message.Message, 1)}
+	results := response.ResultsResponse{Messages: make([]message.Message, 1)}
 
 	if err != nil {
 		results.Messages[0].Error.ID = 100

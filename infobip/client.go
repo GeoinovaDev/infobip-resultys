@@ -2,16 +2,18 @@ package infobip
 
 import (
 	"git.resultys.com.br/sdk/infobip-golang/message"
+	"git.resultys.com.br/sdk/infobip-golang/webhook"
 )
 
 // Client struct
 type Client struct {
-	APIKey string
+	APIKey  string
+	Webhook *webhook.Server
 }
 
 // New cria client
 func New(apikey string) *Client {
-	return &Client{APIKey: apikey}
+	return &Client{APIKey: apikey, Webhook: webhook.New(":36465")}
 }
 
 // Log ...
