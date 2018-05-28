@@ -38,7 +38,7 @@ func New(port string) *Server {
 // AddHook ...
 func (s *Server) AddHook(messageID string) *promise.Promise {
 	s.mutex.Lock()
-	p := &promise.Promise{}
+	p := promise.New()
 	s.hooks[messageID] = p
 	s.mutex.Unlock()
 
