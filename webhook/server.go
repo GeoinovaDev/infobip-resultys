@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"fmt"
 	"net/http"
+	"strings"
 	"sync"
 
 	"git.resultys.com.br/lib/lower/convert/decode"
-	"git.resultys.com.br/lib/lower/log"
-	"git.resultys.com.br/lib/lower/net/loopback"
+	"git.resultys.com.br/lib/lower/exception"
 	"git.resultys.com.br/lib/lower/promise"
 	"git.resultys.com.br/sdk/infobip-golang/message"
 	"git.resultys.com.br/sdk/infobip-golang/response"
@@ -74,8 +74,21 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	defer func() {
 		err := recover()
+		msg := ""
+
+		switch err.(type) {
+		case string:
+			msg = err.(string)
+		case []string:
+			msg = strings.Join(err.([]string), ". ")
+		case error:
+			msg = fmt.Sprint(err)
+		default:
+			msg = "erro de runtime"
+		}
+
 		if err != nil {
-			log.Logger.Save(fmt.Sprint(err), log.WARNING, loopback.IP())
+			exception.Raise(msg, exception.WARNING)
 		}
 	}()
 
