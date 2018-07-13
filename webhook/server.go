@@ -39,6 +39,13 @@ func New(port string) *Server {
 func (s *Server) AddHook(messageID string) *promise.Promise {
 	s.mutex.Lock()
 	p := promise.New()
+
+	if s.ExistHook(messageID) {
+		p = s.hooks[messageID]
+		s.RemoveHook(messageID)
+		return p
+	}
+
 	s.hooks[messageID] = p
 	s.mutex.Unlock()
 
@@ -103,6 +110,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	messageID := json.Messages[0].MessageID
 	if s.ExistHook(messageID) {
 		s.ResolveHook(messageID, json)
+	} else {
+		p := promise.New()
+		s.hooks[messageID] = p
+		s.hooks[messageID].Resolve(json)
 	}
 	s.mutex.Unlock()
 
