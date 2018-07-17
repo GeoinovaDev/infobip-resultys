@@ -38,6 +38,8 @@ func New(port string) *Server {
 // AddHook ...
 func (s *Server) AddHook(messageID string) *promise.Promise {
 	s.mutex.Lock()
+	defer s.mutex.Unlock()
+	
 	p := promise.New()
 
 	if s.ExistHook(messageID) {
@@ -47,7 +49,6 @@ func (s *Server) AddHook(messageID string) *promise.Promise {
 	}
 
 	s.hooks[messageID] = p
-	s.mutex.Unlock()
 
 	return p
 }
