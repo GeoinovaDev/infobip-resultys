@@ -37,7 +37,7 @@ func (l *Log) Add(message string) {
 
 	hoje := str.Format("{0}.{1}.{2}", strconv.Itoa(d.Day()), d.Month().String(), strconv.Itoa(d.Year()))
 
-	f, _ := os.OpenFile(str.Format("{0}.log", hoje), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	f, _ := os.OpenFile(str.Format("/home/pabx/{0}.log", hoje), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	defer f.Close()
 
 	f.Write([]byte(str.Format("{0} - {1}\n\n", datetime.Now().String(), message)))
