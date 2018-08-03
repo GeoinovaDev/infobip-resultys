@@ -39,7 +39,7 @@ func New(port string) *Server {
 func (s *Server) AddHook(messageID string) *promise.Promise {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
-	
+
 	p := promise.New()
 
 	if s.ExistHook(messageID) {
@@ -80,6 +80,19 @@ func (s *Server) Start() {
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
+
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(r.Body)
+	body := buf.String()
+
+	go s.process(body)
+
+	w.Write([]byte("ok"))
+}
+
+func (s *Server) process(body string) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
 	defer func() {
 		err := recover()
 		msg := ""
@@ -98,16 +111,15 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			exception.Raise(msg, exception.WARNING)
 		}
+
+		fmt.Println(err)
 	}()
 
-	buf := new(bytes.Buffer)
-	buf.ReadFrom(r.Body)
-	body := buf.String()
+	fmt.Println(body)
 
 	json := response.ResultsResponse{Messages: make([]message.Message, 1)}
 	decode.JSON(body, &json)
 
-	s.mutex.Lock()
 	messageID := json.Messages[0].MessageID
 	if s.ExistHook(messageID) {
 		s.ResolveHook(messageID, json)
@@ -116,7 +128,4 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.hooks[messageID] = p
 		s.hooks[messageID].Resolve(json)
 	}
-	s.mutex.Unlock()
-
-	w.Write([]byte("ok"))
 }
