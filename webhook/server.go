@@ -10,6 +10,7 @@ import (
 	"git.resultys.com.br/lib/lower/convert/decode"
 	"git.resultys.com.br/lib/lower/exception"
 	"git.resultys.com.br/lib/lower/promise"
+	"git.resultys.com.br/sdk/infobip-golang/log"
 	"git.resultys.com.br/sdk/infobip-golang/message"
 	"git.resultys.com.br/sdk/infobip-golang/response"
 )
@@ -85,6 +86,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	buf.ReadFrom(r.Body)
 	body := buf.String()
 
+	log.GetInstance().Add(body)
 	go s.process(body)
 
 	w.Write([]byte("ok"))
