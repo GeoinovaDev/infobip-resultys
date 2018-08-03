@@ -4,13 +4,13 @@ import (
 	"os"
 	"sync"
 
-	"git.resultys.com.br/lib/lower/datetime"
 	"git.resultys.com.br/lib/lower/str"
+	"git.resultys.com.br/lib/lower/time/datetime"
 )
 
 // Log ...
 type Log struct {
-	mutext *sync.Mutex
+	mutex *sync.Mutex
 }
 
 var current *Log
@@ -19,7 +19,7 @@ var current *Log
 func GetInstance() *Log {
 	if current == nil {
 		current = &Log{
-			mutext: &sync.Mutex{},
+			mutex: &sync.Mutex{},
 		}
 	}
 
