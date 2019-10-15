@@ -27,7 +27,7 @@ type ivrJSONMessage struct {
 	From           string              `json:"from"`
 	Destinations   []map[string]string `json:"destinations"`
 	ValidityPeriod int                 `json:"validityPeriod"`
-	Retry          map[string]int      `json:"retry"`
+	//Retry          map[string]int      `json:"retry"`
 	Parameters     map[string]string   `json:"parameters"`
 
 	NotifyURL         string `json:"notifyUrl"`
@@ -59,8 +59,8 @@ func (client *Client) Call(ivr *IVR) (*call.Client, error) {
 	obj.Messages.NotifyContentType = "application/json"
 	obj.Messages.ValidityPeriod = 720
 
-	obj.Messages.Retry = make(map[string]int)
-	obj.Messages.Retry["maxCount"] = 0
+	//obj.Messages.Retry = make(map[string]int)
+	//obj.Messages.Retry["maxCount"] = 0
 
 	if ivr.Parameters != nil {
 		obj.Messages.Parameters = make(map[string]string)
