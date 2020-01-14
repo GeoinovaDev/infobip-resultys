@@ -46,7 +46,7 @@ func (client *Client) Wait() (message message.Message, err error) {
 
 			// espera até  5 min
 			if count == 120 {
-				err = errors.New("timeout de 5 min")
+				err = errors.New("timeout de 5 min: MessageID = " + client.MessageID)
 				break
 			}
 		}
