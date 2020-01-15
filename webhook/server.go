@@ -11,7 +11,6 @@ import (
 	"git.resultys.com.br/lib/lower/exception"
 	"git.resultys.com.br/lib/lower/promise"
 	"git.resultys.com.br/sdk/infobip-golang/log"
-	"git.resultys.com.br/sdk/infobip-golang/message"
 	"git.resultys.com.br/sdk/infobip-golang/response"
 )
 
@@ -119,7 +118,7 @@ func (s *Server) process(body string) {
 
 	fmt.Println(body)
 
-	json := response.ResultsResponse{Messages: make([]message.Message, 1)}
+	json := response.ResultsResponse{}
 	decode.JSON(body, &json)
 
 	for i := 0; i < len(json.Messages); i++ {
