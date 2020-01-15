@@ -122,12 +122,17 @@ func (s *Server) process(body string) {
 	json := response.ResultsResponse{Messages: make([]message.Message, 1)}
 	decode.JSON(body, &json)
 
-	messageID := json.Messages[0].MessageID
-	if s.ExistHook(messageID) {
-		s.ResolveHook(messageID, json)
-	} else {
-		p := promise.New()
-		s.hooks[messageID] = p
-		s.hooks[messageID].Resolve(json)
+	for i := 0; i < len(json.Messages); i++ {
+		message := json.Messages[i]
+		messageID := message.MessageID
+
+		if s.ExistHook(messageID) {
+			s.ResolveHook(messageID, message)
+		} else {
+			p := promise.New()
+			s.hooks[messageID] = p
+			s.hooks[messageID].Resolve(message)
+		}
 	}
+
 }

@@ -7,7 +7,6 @@ import (
 	"git.resultys.com.br/lib/lower/exec"
 	"git.resultys.com.br/sdk/infobip-golang/infobip"
 	"git.resultys.com.br/sdk/infobip-golang/message"
-	"git.resultys.com.br/sdk/infobip-golang/response"
 )
 
 // Client struct
@@ -25,14 +24,13 @@ func New(messageID string, infobip *infobip.Client) *Client {
 }
 
 // Wait ...
-func (client *Client) Wait() (message message.Message, err error) {
+func (client *Client) Wait() (msg message.Message, err error) {
 	exec.Try(func() {
 		client.waiting = true
 		count := 0
 
 		client.infobip.Webhook.AddHook(client.MessageID).Ok(func(r interface{}) {
-			result := r.(response.ResultsResponse)
-			message = result.Messages[0]
+			msg = r.(message.Message)
 			err = nil
 			client.waiting = false
 		})
@@ -51,8 +49,8 @@ func (client *Client) Wait() (message message.Message, err error) {
 			}
 		}
 
-	}).Catch(func(message string) {
-		err = errors.New(message)
+	}).Catch(func(msg string) {
+		err = errors.New(msg)
 	})
 
 	return
