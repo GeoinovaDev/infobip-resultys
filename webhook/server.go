@@ -116,8 +116,6 @@ func (s *Server) process(body string) {
 		fmt.Println(err)
 	}()
 
-	fmt.Println(body)
-
 	json := response.ResultsResponse{}
 	decode.JSON(body, &json)
 
