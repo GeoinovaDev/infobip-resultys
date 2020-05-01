@@ -7,9 +7,12 @@ import (
 	"git.resultys.com.br/sdk/infobip-golang/response"
 )
 
+// URL Infobip
+var URL = "https://api.infobip.com"
+
 // CreateRequest ...
 func (client *Client) CreateRequest(url string) *request.CURL {
-	request := request.New("https://api.infobip.com" + url)
+	request := request.New(URL + url)
 	request.AddHeader("accept", "application/json")
 	request.AddHeader("authorization", "Basic "+client.APIKey)
 	request.AddHeader("content-type", "application/json")
