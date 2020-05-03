@@ -111,9 +111,8 @@ func (s *Server) process(body string) {
 
 		if err != nil {
 			exception.Raise(msg, exception.WARNING)
+			fmt.Println(err)
 		}
-
-		fmt.Println(err)
 	}()
 
 	json := response.ResultsResponse{}
