@@ -49,6 +49,10 @@ func (client *Client) Wait() (msg message.Message, err error) {
 			}
 		}
 
+		if !client.infobip.Webhook.ExistHook(client.MessageID) {
+			client.infobip.Webhook.RemoveHook(client.MessageID)
+		}
+
 	}).Catch(func(msg string) {
 		err = errors.New(msg)
 	})
