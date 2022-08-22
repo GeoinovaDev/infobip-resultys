@@ -3,8 +3,8 @@ package ivr
 import (
 	"fmt"
 
-	"git.resultys.com.br/sdk/infobip-golang/call"
-	"git.resultys.com.br/sdk/infobip-golang/infobip"
+	"github.com/GeoinovaDev/infobip-resultys/call"
+	"github.com/GeoinovaDev/infobip-resultys/infobip"
 )
 
 // Client struct

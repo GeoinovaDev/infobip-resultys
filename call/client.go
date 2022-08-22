@@ -4,9 +4,9 @@ import (
 	"errors"
 	"time"
 
-	"git.resultys.com.br/lib/lower/exec"
-	"git.resultys.com.br/sdk/infobip-golang/infobip"
-	"git.resultys.com.br/sdk/infobip-golang/message"
+	"github.com/GeoinovaDev/lower-resultys/exec"
+	"github.com/GeoinovaDev/infobip-resultys/infobip"
+	"github.com/GeoinovaDev/infobip-resultys/message"
 )
 
 // Client struct

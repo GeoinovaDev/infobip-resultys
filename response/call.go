@@ -1,6 +1,6 @@
 package response
 
-import "git.resultys.com.br/sdk/infobip-golang/message"
+import "github.com/GeoinovaDev/infobip-resultys/message"
 
 // CallResponse struct
 type CallResponse struct {

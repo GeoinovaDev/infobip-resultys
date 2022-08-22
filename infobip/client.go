@@ -1,8 +1,8 @@
 package infobip
 
 import (
-	"git.resultys.com.br/sdk/infobip-golang/message"
-	"git.resultys.com.br/sdk/infobip-golang/webhook"
+	"github.com/GeoinovaDev/infobip-resultys/message"
+	"github.com/GeoinovaDev/infobip-resultys/webhook"
 )
 
 // Client struct

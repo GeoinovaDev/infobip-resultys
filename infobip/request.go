@@ -1,10 +1,10 @@
 package infobip
 
 import (
-	"git.resultys.com.br/lib/lower/convert/decode"
-	"git.resultys.com.br/lib/lower/net/request"
-	"git.resultys.com.br/sdk/infobip-golang/message"
-	"git.resultys.com.br/sdk/infobip-golang/response"
+	"github.com/GeoinovaDev/lower-resultys/convert/decode"
+	"github.com/GeoinovaDev/lower-resultys/net/request"
+	"github.com/GeoinovaDev/infobip-resultys/message"
+	"github.com/GeoinovaDev/infobip-resultys/response"
 )
 
 // URL Infobip
